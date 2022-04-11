@@ -46,26 +46,30 @@
         <div class="add-card" v-else>
           <div class="card mb-2">
             <div class="card-body d-flex flex-column p-0">
-              <input
-                class="form-control border-0 mb-2"
-                placeholder="Title"
-                type="text"
-              />
-              <textarea
-                class="form-control border-0 small"
-                placeholder="Description"
-                rows="3"
-              ></textarea>
+              <form v-on:submit.prevent="handleSubmit">
+                <input
+                  class="form-control border-0 mb-2"
+                  placeholder="Title"
+                  type="text"
+                  v-model="form.title"
+                />
+                <textarea
+                  class="form-control border-0 small"
+                  placeholder="Description"
+                  rows="3"
+                  v-model="form.description"
+                ></textarea>
+                <div class="button-wrapper d-flex">
+                  <button class="btn btn-primary me-2">Save</button>
+                  <button
+                    class="btn btn-outline-secondary"
+                    @click="isCreating = !isCreating"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
             </div>
-          </div>
-          <div class="button-wrapper d-flex">
-            <button class="btn btn-primary me-2">Save</button>
-            <button
-              class="btn btn-outline-secondary"
-              @click="isCreating = !isCreating"
-            >
-              Cancel
-            </button>
           </div>
         </div>
       </div>
@@ -81,6 +85,7 @@ export default {
   },
   data() {
     return {
+      isLoading: true,
       isCreating: false,
       isActive: true,
       hasError: true,
@@ -93,6 +98,12 @@ export default {
       isCreating: false,
       // Tipe layout daftar task
       isGrid: false,
+      form: {
+        title: "",
+        description: "",
+        isDone: false,
+        category: "Manage",
+      },
       tasks: [
         {
           title: "Brainstroming for new Ideas",
@@ -158,6 +169,11 @@ export default {
         (value, index, self) =>
           self.map((item) => item.category).indexOf(value.category) == index
       );
+    },
+  },
+  methods: {
+    handleSubmit() {
+      var send = this.tasks.push(this.form);
     },
   },
 };

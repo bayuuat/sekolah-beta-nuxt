@@ -53,7 +53,6 @@ export default {
   },
   computed: {
     display() {
-      console.log(this.hide);
       if (this.hide) {
         if (this.task.isDone) {
           return false;
