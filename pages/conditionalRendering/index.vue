@@ -101,8 +101,6 @@ export default {
       form: {
         title: "",
         description: "",
-        isDone: false,
-        category: "Manage",
       },
       tasks: [
         {
@@ -173,7 +171,14 @@ export default {
   },
   methods: {
     handleSubmit() {
-      var send = this.tasks.push(this.form);
+      this.tasks.push({
+        title: this.form.title,
+        description: this.form.description,
+        isDone: false,
+        category: "Manage",
+      });
+      this.form.title = "";
+      this.form.description = "";
     },
   },
 };
