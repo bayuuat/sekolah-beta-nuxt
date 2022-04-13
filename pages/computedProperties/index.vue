@@ -4,6 +4,23 @@
       <div class="title border-bottom d-flex align-items-center py-2">
         <h5>Task</h5>
         <div class="d-flex align-items-center ms-auto">
+          <button
+            class="btn btn-outline-primary py-1 px-3 me-4"
+            @click="shuffle"
+          >
+            Shuffle!
+          </button>
+          <select
+            class="form-select mx-3"
+            name="category"
+            id="category"
+            v-model="sortBy"
+            @change="sort"
+          >
+            <option value="">Sort</option>
+            <option value="asc">Ascending</option>
+            <option value="desc">Descending</option>
+          </select>
           <select
             class="form-select mx-3"
             name="category"
@@ -36,14 +53,15 @@
           </div>
         </div>
       </div>
-      <div class="list-task row">
+      <transition-group name="tasks" tag="div" class="list-task row">
         <CardItem
-          v-for="(iniisinya, i) in resultQuery"
-          :key="i"
-          :task="iniisinya"
+          v-for="task in resultQuery"
+          :task="task"
+          :key="task.id"
           :isGrid="isGrid"
+          :hide="hide"
         />
-      </div>
+      </transition-group>
       <div class="action py-2">
         <a
           href="#"
@@ -81,6 +99,11 @@
     </div>
   </div>
 </template>
+<style scoped>
+#app .tasks-move {
+  transition: 0.4s;
+}
+</style>
 <script>
 import CardItem from "@/components/Card/CardItem.vue";
 
@@ -97,42 +120,50 @@ export default {
       // Variabel penampung teks pencarian
       searchQuery: "",
       dropdownQuery: "",
+      sortBy: "",
+      hide: false,
       // Status saat menambahkan task
       isCreating: false,
       // Tipe layout daftar task
       isGrid: false,
       tasks: [
         {
+          id: 1,
           title: "Brainstroming for new Ideas",
           description: "ini deskripsi",
           isDone: false,
           category: "Manage",
         },
         {
+          id: 2,
           title: "Approve and Assign ideas",
           description: "ini deskripsi 2",
           isDone: false,
           category: "Manage",
         },
         {
+          id: 3,
           title: "Work on design and UX",
           description: " ini deskripsi 3",
           isDone: false,
           category: "Design",
         },
         {
+          id: 4,
           title: "Publish and deploy",
           description: "ini deskripsi 4",
           isDone: false,
           category: "Develop",
         },
         {
+          id: 5,
           title: "Assign topics to writer",
           description: "ini deskripsi 5",
           isDone: false,
           category: "Manage",
         },
         {
+          id: 6,
           title: "Design layout",
           description: " ini deskripsi 6",
           isDone: false,
@@ -166,6 +197,16 @@ export default {
         (value, index, self) =>
           self.map((item) => item.category).indexOf(value.category) == index
       );
+    },
+  },
+  methods: {
+    shuffle() {
+      this.tasks = _.shuffle(this.tasks);
+    },
+    sort() {
+      if (this.sortBy) {
+        this.tasks = _.orderBy(this.tasks, ["title"], [this.sortBy]);
+      }
     },
   },
 };
