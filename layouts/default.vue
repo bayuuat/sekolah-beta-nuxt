@@ -29,7 +29,7 @@ export default {
   beforeCreate() {
     this.isLoading = true;
   },
-  mounted() {
+  created() {
     setTimeout(() => {
       this.isLoading = false;
     }, 1000);

@@ -22,7 +22,8 @@ export default {
       { rel: "stylesheet", href: "https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" }
     ],
     script: [
-      { src: "https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js", body: true }
+      { src: "https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js", body: true },
+      { src: "https://code.jquery.com/jquery-3.6.0.js", body: true }
     ]
   },
 
@@ -55,6 +56,10 @@ export default {
         _: 'lodash'
       })
     ]
+  },
+
+  axios: {
+    baseURL: 'https://berita-indo-api.vercel.app/',
   },
 
   pwa: {
